@@ -30,7 +30,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    fetchWeather('london');
+    fetchWeather('Patos de Minas');
   }, []);
 
   if (!loaded || weatherData === null) {
