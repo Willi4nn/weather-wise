@@ -1,4 +1,10 @@
-import { View, Text, Image } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  KeyboardAvoidingView,
+  SafeAreaView,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { ScrollView } from 'react-native';
 import { styles } from './styles';
@@ -24,52 +30,56 @@ export default function WeatherInfo({ weatherData }: WeatherInfoProps) {
   } = weatherData;
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={styles.circle} />
-      <Image
-        style={styles.weatherIcon}
-        source={{ uri: `http://openweathermap.org/img/wn/${icon}.png` }}
-      />
-      <View style={styles.header}>
-        <Text style={styles.temperature}>{temp}º</Text>
-        <View style={styles.location}>
-          <Text style={styles.name}>{name} </Text>
-          <Icon name="compass" size={32} style={styles.cityIcon} />
-        </View>
-        <Text style={styles.description}>{description} </Text>
-        <View style={styles.cards}>
-          <View style={styles.cardInfo}>
-            <Image source={visibilityImg} />
-            <Text>{visibility} m</Text>
-            <Text style={styles.title}>Visibilidade</Text>
+    <SafeAreaView>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <KeyboardAvoidingView>
+          <View style={styles.circle} />
+          <Image
+            style={styles.weatherIcon}
+            source={{ uri: `http://openweathermap.org/img/wn/${icon}.png` }}
+          />
+          <View style={styles.header}>
+            <Text style={styles.temperature}>{temp}º</Text>
+            <View style={styles.location}>
+              <Text style={styles.name}>{name} </Text>
+              <Icon name="compass" size={32} style={styles.cityIcon} />
+            </View>
+            <Text style={styles.description}>{description} </Text>
+            <View style={styles.cards}>
+              <View style={styles.cardInfo}>
+                <Image source={visibilityImg} />
+                <Text>{visibility} m</Text>
+                <Text style={styles.title}>Visibilidade</Text>
+              </View>
+              <View style={styles.cardInfo}>
+                <Image source={thermometerImg} />
+                <Text>{feels_like}º</Text>
+                <Text style={styles.title}>Sensação térmica</Text>
+              </View>
+              <View style={styles.cardInfo}>
+                <Image source={windImg} />
+                <Text>{speed} m/s</Text>
+                <Text style={styles.title}>Velocidade do vento</Text>
+              </View>
+              <View style={styles.cardInfo}>
+                <Image source={humidityImg} />
+                <Text>{humidity} %</Text>
+                <Text style={styles.title}>Umidade</Text>
+              </View>
+              <View style={styles.cardInfo}>
+                <Image source={sunriseImg} />
+                <Text>{new Date(sunrise * 1000).toLocaleTimeString()}</Text>
+                <Text style={styles.title}>Nascer do sol</Text>
+              </View>
+              <View style={styles.cardInfo}>
+                <Image source={sunsetImg} />
+                <Text>{new Date(sunset * 1000).toLocaleTimeString()}</Text>
+                <Text style={styles.title}>Pôr do sol</Text>
+              </View>
+            </View>
           </View>
-          <View style={styles.cardInfo}>
-            <Image source={thermometerImg} />
-            <Text>{feels_like}º</Text>
-            <Text style={styles.title}>Sensação térmica</Text>
-          </View>
-          <View style={styles.cardInfo}>
-            <Image source={windImg} />
-            <Text>{speed} m/s</Text>
-            <Text style={styles.title}>Velocidade do vento</Text>
-          </View>
-          <View style={styles.cardInfo}>
-            <Image source={humidityImg} />
-            <Text>{humidity} %</Text>
-            <Text style={styles.title}>Umidade</Text>
-          </View>
-          <View style={styles.cardInfo}>
-            <Image source={sunriseImg} />
-            <Text>{new Date(sunrise * 1000).toLocaleTimeString()}</Text>
-            <Text style={styles.title}>Nascer do sol</Text>
-          </View>
-          <View style={styles.cardInfo}>
-            <Image source={sunsetImg} />
-            <Text>{new Date(sunset * 1000).toLocaleTimeString()}</Text>
-            <Text style={styles.title}>Pôr do sol</Text>
-          </View>
-        </View>
-      </View>
-    </ScrollView>
+        </KeyboardAvoidingView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
