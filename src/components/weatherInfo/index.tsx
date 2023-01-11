@@ -28,7 +28,7 @@ export default function WeatherInfo({ weatherData }: WeatherInfoProps) {
     wind: { speed },
     sys: { sunrise, sunset },
   } = weatherData;
-
+  const roundedTime = Math.round(temp);
   return (
     <SafeAreaView>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -39,7 +39,7 @@ export default function WeatherInfo({ weatherData }: WeatherInfoProps) {
             source={{ uri: `http://openweathermap.org/img/wn/${icon}.png` }}
           />
           <View style={styles.header}>
-            <Text style={styles.temperature}>{temp}º</Text>
+            <Text style={styles.temperature}> {roundedTime}º</Text>
             <View style={styles.location}>
               <Text style={styles.name}>{name} </Text>
               <Icon name="compass" size={32} style={styles.cityIcon} />
