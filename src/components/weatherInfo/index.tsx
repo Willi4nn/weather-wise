@@ -1,6 +1,6 @@
 import {
   Image,
-  KeyboardAvoidingView,
+  ScrollView,
   Text,
   View
 } from 'react-native';
@@ -11,12 +11,16 @@ import sunsetImg from '../../assets/sunset.png';
 import thermometerImg from '../../assets/thermometer.png';
 import visibilityImg from '../../assets/visibility.png';
 import windImg from '../../assets/wind.png';
+import formatTime from '../../libs/format-time';
+import formatVisibility from '../../libs/format-visibility';
 import { WeatherData } from '../../models/weatherData';
 import { styles } from './styles';
+import WeatherCard from './WeatherCard';
 
 interface WeatherInfoProps {
   weatherData: WeatherData;
 }
+
 export default function WeatherInfo({ weatherData }: WeatherInfoProps) {
   const {
     name,
@@ -26,54 +30,61 @@ export default function WeatherInfo({ weatherData }: WeatherInfoProps) {
     wind: { speed },
     sys: { sunrise, sunset },
   } = weatherData;
-  const roundedTime = Math.round(temp);
+
+  const roundedTemp = Math.round(temp);
+  const roundedFeelsLike = Math.round(feels_like);
   return (
-    <KeyboardAvoidingView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.circle} />
       <Image
         style={styles.weatherIcon}
         source={{ uri: `http://openweathermap.org/img/wn/${icon}.png` }}
       />
       <View style={styles.header}>
-        <Text style={styles.temperature}> {roundedTime}º</Text>
+        <Text style={styles.temperature}> {roundedTemp}º</Text>
         <View style={styles.location}>
-          <Text style={styles.name}>{name} </Text>
-          <Icon name="compass" size={32} style={styles.cityIcon} />
+          <Text style={styles.name}>{name}</Text>
+          <Icon name="compass" size={28} style={styles.cityIcon} />
         </View>
-        <Text style={styles.description}>{description} </Text>
+
+        <Text style={styles.description}>
+          {description.charAt(0).toUpperCase() + description.slice(1)}
+        </Text>
+
         <View style={styles.cards}>
-          <View style={styles.cardInfo}>
-            <Image source={visibilityImg} />
-            <Text>{visibility} m</Text>
-            <Text style={styles.title}>Visibilidade</Text>
-          </View>
-          <View style={styles.cardInfo}>
-            <Image source={thermometerImg} />
-            <Text>{feels_like}º</Text>
-            <Text style={styles.title}>Sensação térmica</Text>
-          </View>
-          <View style={styles.cardInfo}>
-            <Image source={windImg} />
-            <Text>{speed} m/s</Text>
-            <Text style={styles.title}>Velocidade do vento</Text>
-          </View>
-          <View style={styles.cardInfo}>
-            <Image source={humidityImg} />
-            <Text>{humidity} %</Text>
-            <Text style={styles.title}>Umidade</Text>
-          </View>
-          <View style={styles.cardInfo}>
-            <Image source={sunriseImg} />
-            <Text>{new Date(sunrise * 1000).toLocaleTimeString()}</Text>
-            <Text style={styles.title}>Nascer do sol</Text>
-          </View>
-          <View style={styles.cardInfo}>
-            <Image source={sunsetImg} />
-            <Text>{new Date(sunset * 1000).toLocaleTimeString()}</Text>
-            <Text style={styles.title}>Pôr do sol</Text>
-          </View>
+          <WeatherCard
+            image={visibilityImg}
+            value={formatVisibility(visibility)}
+            title="Visibilidade"
+          />
+          <WeatherCard
+            image={thermometerImg}
+            value={`${roundedFeelsLike}°`}
+            title="Sensação térmica"
+          />
+          <WeatherCard
+            image={windImg}
+            value={`${speed} m/s`}
+            title="Velocidade do vento"
+          />
+          <WeatherCard
+            image={humidityImg}
+            value={`${humidity}%`}
+            title="Umidade"
+          />
+          <WeatherCard
+            image={sunriseImg}
+            value={formatTime(sunrise)}
+            title="Nascer do sol"
+          />
+          <WeatherCard
+            image={sunsetImg}
+            value={formatTime(sunset)}
+            title="Pôr do sol"
+          />
         </View>
       </View>
-    </KeyboardAvoidingView>
+    </ScrollView>
   );
 }
+
