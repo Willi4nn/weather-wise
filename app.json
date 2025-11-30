@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "weather",
-    "slug": "weather",
+    "name": "Weather Wise",
+    "slug": "weather-wise",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -12,7 +12,8 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "enabled": false,
+      "checkAutomatically": "ON_ERROR_RECOVERY"
     },
     "assetBundlePatterns": [
       "**/*"

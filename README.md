@@ -1,21 +1,30 @@
+# Weather App
+
+Aplicativo de previsão do tempo com React Native e Expo.
+
+## Tecnologias
+
+- React Native + Expo
+- TypeScript
+- Axios
+- OpenWeatherMap API
+
 ## Instalação
 
-1. Instale as dependências necessárias usando o seguinte comando no terminal: 
+```bash
+npm install
+```
 
-`npm install`
+Obtenha sua chave gratuita em: [OpenWeatherMap](https://openweathermap.org/api)
 
-2. Instale o Expo CLI de forma global usando o seguinte comando: 
+Crie o arquivo `.env` na raiz:
 
-`npm install -g expo-cli` 
+```env
+EXPO_PUBLIC_OPENWEATHER_API_KEY=sua_chave_aqui
+```
 
-## Execução
+## Executar
 
-1. Inicie o aplicativo usando o seguinte comando no terminal:
-
-`expo start`
-
-2. Abra o aplicativo em seu dispositivo móvel baixando o aplicativo do Expo na loja de aplicativos e escaneie o código QR gerado na tela do terminal.
-
-## Uso
-
-A partir daqui, você pode explorar as funcionalidades da aplicação e começar a usá-la.
+```bash
+npx expo start
+```

@@ -5,16 +5,25 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 60,
-    padding: 32,
+    paddingHorizontal: 20,
   },
-  circle: {
-    alignSelf: 'center',
-    position: 'absolute',
-    marginTop: 180,
-    height: 150,
-    width: 150,
-    opacity: 0.5,
-    borderRadius: 100,
-    backgroundColor: THEME.COLORS.WHITE,
+  centerContainer: {
+    flex: 1,
+    paddingTop: 200,
+    alignItems: 'center',
+    paddingHorizontal: 20,
+  },
+  feedbackText: {
+    marginTop: 12,
+    fontSize: THEME.FONT_SIZE.LG,
+    fontFamily: THEME.FONT_FAMILY.REGULAR,
+    color: THEME.COLORS.GRAY_500,
+  },
+  errorText: {
+    color: THEME.COLORS.RED,
+    fontSize: THEME.FONT_SIZE.LG,
+    fontFamily: THEME.FONT_FAMILY.SEMI_BOLD,
+    textAlign: 'center',
+    lineHeight: 24,
   },
 });

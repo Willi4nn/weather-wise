@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import { THEME } from '../../theme';
 
 export const styles = StyleSheet.create({
-  header: { alignItems: 'center', },
+  header: { alignItems: 'center' },
   circle: {
     alignSelf: 'center',
     position: 'absolute',
@@ -55,9 +55,7 @@ export const styles = StyleSheet.create({
     width: '42%',
     height: 110,
     backgroundColor: THEME.COLORS.WHITE,
-    padding: 10,
     borderRadius: 20,
-
     elevation: 20,
     shadowColor: THEME.COLORS.PURPLE,
   },
