@@ -1,90 +1,100 @@
-import {
-  Image,
-  ScrollView,
-  Text,
-  View
-} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import humidityImg from '../../assets/humidity.png';
-import sunriseImg from '../../assets/sunrise.png';
-import sunsetImg from '../../assets/sunset.png';
-import thermometerImg from '../../assets/thermometer.png';
-import visibilityImg from '../../assets/visibility.png';
-import windImg from '../../assets/wind.png';
-import formatTime from '../../libs/format-time';
-import formatVisibility from '../../libs/format-visibility';
-import { WeatherData } from '../../models/weatherData';
-import { styles } from './styles';
+import { Feather, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import React from 'react';
+import { Image, ScrollView, Text, View } from 'react-native';
+import { Weather } from '../../domain/models/Weather';
+import { THEME } from '../../theme';
 import WeatherCard from './WeatherCard';
+import { styles } from './styles';
 
-interface WeatherInfoProps {
-  weatherData: WeatherData;
+interface Props {
+  data: Weather;
+  isLoading: boolean;
 }
 
-export default function WeatherInfo({ weatherData }: WeatherInfoProps) {
-  const {
-    name,
-    visibility,
-    weather: [{ icon, description }],
-    main: { temp, humidity, feels_like },
-    wind: { speed },
-    sys: { sunrise, sunset },
-  } = weatherData;
-
-  const roundedTemp = Math.round(temp);
-  const roundedFeelsLike = Math.round(feels_like);
+export default function WeatherInfo({ data, isLoading }: Props) {
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={styles.circle} />
-      <Image
-        style={styles.weatherIcon}
-        source={{ uri: `http://openweathermap.org/img/wn/${icon}.png` }}
-      />
-      <View style={styles.header}>
-        <Text style={styles.temperature}> {roundedTemp}º</Text>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={styles.scrollContainer}
+      style={{ opacity: isLoading ? 0.6 : 1 }}
+    >
+      <View style={styles.mainCard}>
+        <Image style={styles.weatherIcon} source={{ uri: data.iconUri }} />
+
+        <View style={styles.temperatureContainer}>
+          <Text style={styles.temperature}>{data.temp}</Text>
+          <Text style={styles.tempUnit}>°C</Text>
+        </View>
+
         <View style={styles.location}>
-          <Text style={styles.name}>{name}</Text>
-          <Icon name="compass" size={28} style={styles.cityIcon} />
+          <Text style={styles.name}>
+            {data.city}, {data.country}
+          </Text>
+          <Ionicons name="location" size={20} style={styles.cityIcon} />
         </View>
 
-        <Text style={styles.description}>
-          {description.charAt(0).toUpperCase() + description.slice(1)}
-        </Text>
+        <Text style={styles.description}>{data.description}</Text>
 
-        <View style={styles.cards}>
-          <WeatherCard
-            image={visibilityImg}
-            value={formatVisibility(visibility)}
-            title="Visibilidade"
-          />
-          <WeatherCard
-            image={thermometerImg}
-            value={`${roundedFeelsLike}°`}
-            title="Sensação térmica"
-          />
-          <WeatherCard
-            image={windImg}
-            value={`${speed} m/s`}
-            title="Velocidade do vento"
-          />
-          <WeatherCard
-            image={humidityImg}
-            value={`${humidity}%`}
-            title="Umidade"
-          />
-          <WeatherCard
-            image={sunriseImg}
-            value={formatTime(sunrise)}
-            title="Nascer do sol"
-          />
-          <WeatherCard
-            image={sunsetImg}
-            value={formatTime(sunset)}
-            title="Pôr do sol"
-          />
+        <View style={styles.minMaxRow}>
+          <Text style={styles.minMaxText}>Mín: {data.tempMin}°</Text>
+          <Text style={styles.minMaxText}>Máx: {data.tempMax}°</Text>
         </View>
+      </View>
+
+      <View style={styles.gridContainer}>
+        <WeatherCard
+          icon={
+            <Feather name="thermometer" size={20} color={THEME.COLORS.PURPLE} />
+          }
+          value={`${data.feelsLike}°C`}
+          title="Sensação Térmica"
+        />
+        <WeatherCard
+          icon={<Feather name="eye" size={20} color={THEME.COLORS.PURPLE} />}
+          value={data.visibility}
+          title="Visibilidade"
+        />
+        <WeatherCard
+          icon={<Feather name="wind" size={20} color={THEME.COLORS.PURPLE} />}
+          value={`${data.windSpeed} m/s`}
+          title="Velocidade do Vento"
+        />
+        <WeatherCard
+          icon={
+            <Feather name="droplet" size={20} color={THEME.COLORS.PURPLE} />
+          }
+          value={`${data.humidity}%`}
+          title="Umidade do Ar"
+        />
+        <WeatherCard
+          icon={
+            <MaterialCommunityIcons
+              name="gauge"
+              size={20}
+              color={THEME.COLORS.PURPLE}
+            />
+          }
+          value={`${data.pressure} hPa`}
+          title="Pressão Atmosférica"
+        />
+        <WeatherCard
+          icon={<Feather name="cloud" size={20} color={THEME.COLORS.PURPLE} />}
+          value={`${data.clouds}%`}
+          title="Nebulosidade"
+        />
+        <WeatherCard
+          icon={
+            <Feather name="sunrise" size={20} color={THEME.COLORS.PURPLE} />
+          }
+          value={data.sunrise}
+          title="Nascer do Sol"
+        />
+        <WeatherCard
+          icon={<Feather name="sunset" size={20} color={THEME.COLORS.PURPLE} />}
+          value={data.sunset}
+          title="Pôr do Sol"
+        />
       </View>
     </ScrollView>
   );
 }
-

@@ -1,20 +1,25 @@
-import { Image, Text, View } from "react-native";
-import { styles } from "./styles";
+import React from 'react';
+import { Text, View } from 'react-native';
+import { styles } from './styles';
 
 interface WeatherCardProps {
-  image: any;
+  icon: React.ReactNode;
   value: string;
   title: string;
 }
 
-function WeatherCard({ image, value, title }: WeatherCardProps) {
+export default function WeatherCard({ icon, value, title }: WeatherCardProps) {
   return (
     <View style={styles.cardInfo}>
-      <Image source={image} />
-      <Text style={styles.cardValue}>{value}</Text>
-      <Text style={styles.title}>{title}</Text>
+      <View style={styles.cardHeader}>
+        {icon}
+        <Text style={styles.title} numberOfLines={1}>
+          {title}
+        </Text>
+      </View>
+      <Text style={styles.cardValue} numberOfLines={1}>
+        {value}
+      </Text>
     </View>
   );
 }
-
-export default WeatherCard;
