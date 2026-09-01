@@ -7,6 +7,7 @@ export interface Weather {
   tempMax: number;
   description: string;
   iconUri: string;
+  iconCode: string;
   humidity: number;
   windSpeed: number;
   visibility: string;

@@ -23,10 +23,10 @@ export const styles = StyleSheet.create({
     marginTop: 12,
     fontSize: THEME.FONT_SIZE.MD,
     fontFamily: THEME.FONT_FAMILY.REGULAR,
-    color: THEME.COLORS.WHITE,
+    color: '#FFFFFF',
   },
   errorText: {
-    color: '#FCA5A5',
+    color: '#FFFFFF',
     fontSize: THEME.FONT_SIZE.MD,
     fontFamily: THEME.FONT_FAMILY.SEMI_BOLD,
     textAlign: 'center',

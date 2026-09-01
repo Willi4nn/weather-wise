@@ -7,7 +7,7 @@ import {
 } from '@expo-google-fonts/inter';
 import { StatusBar } from 'expo-status-bar';
 import { ActivityIndicator, View } from 'react-native';
-import { Background } from './src/components/Background';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Home from './src/screens/Home';
 
 export default function App() {
@@ -27,9 +27,9 @@ export default function App() {
   }
 
   return (
-    <Background>
-      <StatusBar style="auto" />
+    <SafeAreaProvider>
+      <StatusBar style="light" />
       <Home />
-    </Background>
+    </SafeAreaProvider>
   );
 }

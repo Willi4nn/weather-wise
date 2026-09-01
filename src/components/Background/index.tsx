@@ -1,14 +1,18 @@
 import { LinearGradient } from 'expo-linear-gradient';
+import { getWeatherGradient } from '../../utils/getWeatherGradient';
 import { styles } from './styles';
 
 interface Props {
   children: React.ReactNode;
+  iconCode?: string;
 }
 
-export function Background({ children }: Props) {
+export function Background({ children, iconCode }: Props) {
+  const theme = getWeatherGradient(iconCode);
+
   return (
     <LinearGradient
-      colors={['#A8C0FF', '#C2E9FB', '#FFE5E5'] as const}
+      colors={theme.colors}
       start={{ x: 0, y: 0 }}
       end={{ x: 0, y: 1 }}
       style={styles.container}

@@ -5,13 +5,23 @@ import formatTime from '../libs/format-time';
 import formatVisibility from '../libs/format-visibility';
 
 export class WeatherService {
-  static async getWeatherByCity(city: string): Promise<Weather> {
+  static async getWeatherByCity(
+    city: string,
+    signal?: AbortSignal
+  ): Promise<Weather> {
     try {
       const { data } = await api.get('/weather', {
         params: { q: city.trim() },
+        signal,
       });
       return this.mapToDomain(data);
     } catch (error) {
+      if (
+        (error as any).name === 'CanceledError' ||
+        (error as any).code === 'ERR_CANCELED'
+      ) {
+        throw new Error('Canceled');
+      }
       throw new Error(this.handleError(error as AxiosError));
     }
   }
@@ -28,6 +38,7 @@ export class WeatherService {
         data.weather[0].description.charAt(0).toUpperCase() +
         data.weather[0].description.slice(1),
       iconUri: `https://openweathermap.org/img/wn/${data.weather[0].icon}@4x.png`,
+      iconCode: data.weather[0].icon,
       humidity: data.main.humidity,
       windSpeed: data.wind.speed,
       visibility: formatVisibility(data.visibility),

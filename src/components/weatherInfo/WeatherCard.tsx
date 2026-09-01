@@ -6,6 +6,7 @@ interface WeatherCardProps {
   icon: React.ReactNode;
   value: string;
   title: string;
+  isDark?: boolean;
 }
 
 export default function WeatherCard({ icon, value, title }: WeatherCardProps) {
